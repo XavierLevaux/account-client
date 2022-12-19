@@ -1,0 +1,13 @@
+com/mybank/account/api/model/Transaction$TypeEnum.class
+com/mybank/account/api/SavingAccountsApi.class
+com/mybank/account/api/model/AccountRequest$TypeEnum.class
+com/mybank/account/api/model/Transaction.class
+com/mybank/account/api/model/CodeValue.class
+com/mybank/account/api/model/Balance.class
+com/mybank/account/api/model/AccountRequest.class
+com/mybank/account/api/model/Pageable.class
+com/mybank/account/api/model/InlineResponse200.class
+com/mybank/account/api/AccountsApi.class
+com/mybank/account/api/model/SavingAccount.class
+com/mybank/account/api/model/AllOfaccountType.class
+com/mybank/account/api/model/Account.class

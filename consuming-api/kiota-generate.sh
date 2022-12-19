@@ -1,0 +1,1 @@
+./kiota-osx-x64/kiota generate -l java -d ./src/main/resources/consuming-accounts.yml -c GetAccountApiClient -n getaccountclient.apiclient -o ./target/generated-sources/kiota/src/gen/java/main

@@ -1,0 +1,209 @@
+openapi: 3.0.0
+info:
+  # Your application title.
+  title: Belfius Banking API
+  # API version. You can use semantic versioning like 1.0.0.
+  version: 1.0.0
+  # The api type as defined by integration architecture
+  # possible values are: [enterprise, experience, inner]
+  x-api-type: enterprise
+  # Unique identifier of the API in the urn format
+  # The uuid must be generate by a random generator. https://www.uuidtools.com/v4
+  # This uuid is only generated once and the x-api-id stays unique trough the entire api lifecycle
+  x-api-id: c0184f38-b98d-11e7-9c56-68f728c1ba70
+  # The DEFL code of your application.
+  x-application-code: defl
+  description: |-
+    <Add summary below>
+    The 'Simple Banking API' provides consumers a simple way to retrieve bank
+    accounts info, account balances and account transactions history.
+
+    ### Version history
+    #### Draft Versions (0.x.x)
+    * v0.0.1: My first draft of the API Specifications.
+    * v0.0.2: My second draft.
+    * v0.1.0: My first version to share with stakeholders.
+    * v0.1.1: My version after collecting feedback from business stakeholders.
+    * v0.1.2: My version after collecting feedback from developers.
+    #### Release Versions (1.x.x)
+    * v1.0.0: My first version ready for development.
+    * v1.1.0: Added GET /accounts/{id}/transactions operation to support the retrieval of transaction history for an individual account.
+
+    ### Use Cases
+    * As a user I want to retrieve my accounts.
+    * As a user I want to open a new account.
+    * As a user I want to update one of my existing accounts.
+    * As a user I want to retrieve the balance of one of my individual accounts.
+    * As a user I want to retrieve the transaction history of an invidual account.
+
+    ### Additional documentation
+    - [Insert links to (internal) documentation](https://example.belfius.be/documentation)
+
+  # Contact information: Name of your team, email.
+  contact:
+    name: API Competence Center Team
+    email: api-competence-center@belfius.be
+
+  # Contact information: Name of your team, email.
+  # Check the API Design Guidelines for the right naming conventions.
+  # https://confluence.belwired.net:8443/display/00013816E/API+design+guidelines
+servers:
+  - url: "https://defl-tst.belwired.net/core-banking/payments"
+  - url: "https://defl-gtu.belwired.net/core-banking/payments"
+  - url: "https://defl.belwired.net/core-banking/payments"
+
+tags:
+  - name: Accounts
+    description: "All operations related to accounts and balances."
+  - name: Transactions
+    description: "All operations related to account transactions."
+
+paths:
+
+  /accounts/{id}:
+    get:
+      tags:
+        - Accounts
+      summary: Get the properties of an account.
+      description: "Use this operation to update properties of an account."
+      operationId: getAccount
+      x-bfunction: B00001
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          description: "Id of the account"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Account retrieved successfully."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/account"
+
+  /saving-accounts/{id}:
+    get:
+      tags:
+        - Accounts
+      summary: Retrieve the current balance of an account.
+      description: "Use this operation to retrieve the account balances."
+      operationId: getAccountBalances
+      x-bfunction: B00003
+      security:
+        - basicAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          description: "Id of the account"
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "An array of account balances."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/savingAccount'
+
+components:
+  schemas:
+    codeValue:
+      type: object
+      description: code and value object
+      properties:
+        codeListId:
+          type: string
+          description: the code list identifier
+        codeId:
+          type: string
+          description: the code identifer of the codeValue
+
+    iban:
+      type: string
+
+    currency:
+      type: string
+
+    max18DecimalNumber:
+      type: number
+
+    date:
+      type: string
+
+    account:
+      type: object
+      description: "An account in the context of a bank, created by the deposit of money or its equivalent and subject to withdrawel of money"
+      properties:
+        id:
+          type: string
+          description: "The unique identifier."
+          example: "123456789012"
+        type:
+          description: |
+            The type differentiator as a Code Value.
+            Values are listed in TCOD PA65.
+            Possible CodeId Values are:
+            - 1 = Savings
+            - 2 = Payment
+          allOf:
+            - $ref: '#/components/schemas/codeValue'
+          example:
+            codeListId: "PA65"
+            codeId: "2"
+        alias:
+          type: string
+          description: "A descriptive description of my account"
+          example: "Savings for my son"
+        iban:
+          $ref: '#/components/schemas/iban'
+        currency:
+          $ref: '#/components/schemas/currency'
+        holderName:
+          type: string
+          description: "The full name of the account holder"
+          example: "Robert Schuman"
+        balances:
+          type: array
+          description: "A list of balances."
+          items:
+            $ref: '#/components/schemas/balance'
+      required:
+        - id
+        - iban
+        - currency
+        - balance
+
+    savingAccount:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/account'
+      properties:
+        interestRate:
+          type: number
+          description: interest rate
+
+    balance:
+      type: object
+      description: "The amount of money present on a bank account"
+      properties:
+        amount:
+          type: number
+      required:
+        - amount
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+security:
+  - basicAuth: [ ]
+
+externalDocs:
+  description: "Link to (internal) API Documentation"
+  url: "https://confluence.belwired.net:8443/"

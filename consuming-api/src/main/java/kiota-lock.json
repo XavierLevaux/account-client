@@ -1,0 +1,28 @@
+{
+  "descriptionHash": "A98FAA87E4BA9B3742DA07A8E1CE940DF380EFBDA48F52D67D57E4DABAC4FF8EE775ED1E199BA8DC576160BEC9B4EBAEA98E0D47706143568D8AB9B6697D1228",
+  "descriptionLocation": "/Volumes/Storage/projects/kiota-test/account-client/consuming-api/./src/main/resources/consuming-accounts.yml",
+  "lockFileVersion": "1.0.0",
+  "kiotaVersion": "0.8.3.0",
+  "clientClassName": "GetAccountApiClient",
+  "clientNamespaceName": "getaccountclient.apiclient",
+  "language": "Java",
+  "usesBackingStore": false,
+  "includeAdditionalData": true,
+  "serializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonSerializationWriterFactory",
+    "Microsoft.Kiota.Serialization.Text.TextSerializationWriterFactory"
+  ],
+  "deserializers": [
+    "Microsoft.Kiota.Serialization.Json.JsonParseNodeFactory",
+    "Microsoft.Kiota.Serialization.Text.TextParseNodeFactory"
+  ],
+  "structuredMimeTypes": [
+    "application/json",
+    "application/xml",
+    "text/plain",
+    "text/xml",
+    "text/yaml"
+  ],
+  "includePatterns": [],
+  "excludePatterns": []
+}
